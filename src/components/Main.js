@@ -11,26 +11,53 @@ const DEFAULT_CID = "QmYiGo3KpK5Ca928ujpH2MKJgVEkLE981gj1QERYC5h8e8";
 class Main extends React.Component {
   state = {
     cid: "",
-    preferences: {}
+    preferences: {
+      one: "",
+      two: "",
+      three: "",
+      codeStyle: "docco"
+    }
   };
 
   async componentDidMount() {
     const cid = localStorage.getItem("preferenceCID") || DEFAULT_CID;
-    const ipfs = await getIpfs();
-    const resp = await ipfs.get(cid);
-    const preferences = JSON.parse(resp[0].content.toString());
-    this.setState({ cid, preferences });
+    await this.loadPreferences(cid);
   }
 
-  savePreferences = async preferences => {
+  handlePrefChange = (name, value) => {
+    console.log("HERE: ", name, " ", value);
+    this.setState(state => ({
+      ...state,
+      preferences: {
+        ...state.preferences,
+        [name]: value
+      }
+    }));
+  };
+
+  loadPreferences = async cid => {
+    const ipfs = await getIpfs();
+    const resp = await ipfs.cat(cid);
+    const preferences = JSON.parse(resp);
+    this.setState({ cid, preferences });
+  };
+
+  handleLoad = async evt => {
+    evt.preventDefault();
+    const { cid } = this.state;
+    this.loadPreferences(cid);
+  };
+
+  handleSave = async evt => {
+    evt.preventDefault();
+    const { preferences } = this.state;
     if (preferences) {
       const ipfs = await getIpfs();
       const toAdd = Buffer.from(JSON.stringify(preferences));
       const resp = await ipfs.add(toAdd);
       const cid = resp[0].hash;
-      console.log(cid);
       localStorage.setItem("preferenceCID", cid);
-      this.setState({ cid, preferences });
+      this.setState({ cid });
     }
   };
 
@@ -45,7 +72,9 @@ class Main extends React.Component {
           <PreferenceForm
             cid={this.state.cid}
             preferences={this.state.preferences}
-            savePreferences={this.savePreferences}
+            onChange={this.handlePrefChange}
+            onLoad={this.handleLoad}
+            onSave={this.handleSave}
           />
           <Preview cid={this.state.cid} preferences={this.state.preferences} />
         </div>
