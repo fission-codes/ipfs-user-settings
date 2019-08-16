@@ -1,82 +1,94 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import * as codeStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 class PreferenceForm extends React.Component {
-  constructor(props) {
-    super(props);
-    const { cid, preferences = {} } = this.props;
-    const { one = "", two = "", three = "" } = preferences;
-    this.state = { cid, one, two, three };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      const { cid, preferences = {} } = this.props;
-      const { one = "", two = "", three = "" } = preferences;
-      this.setState({ cid, one, two, three });
-    }
-  }
-
   handleChange = name => evt => {
-    this.setState({
-      [name]: evt.target.value
-    });
-  };
-
-  handleSubmit = evt => {
-    evt.preventDefault();
-    const { one, two, three } = this.state;
-    this.props.savePreferences({ one, two, three });
+    const value = evt.target.value;
+    this.props.onChange(name, value);
   };
 
   render() {
-    const { classes } = this.props;
+    const { cid, preferences, classes } = this.props;
+
     return (
-      <form onSubmit={this.handleSubmit} className={classes.form}>
-        <TextField
-          label="cid"
-          value={this.props.cid}
-          // onChange={this.handleChange("cid")}
-          disabled
-          className={classes.textField}
-        />
-        <TextField
-          label="one"
-          value={this.state.one}
-          onChange={this.handleChange("one")}
-          className={classes.textField}
-        />
-        <TextField
-          label="two"
-          value={this.state.two}
-          onChange={this.handleChange("two")}
-          className={classes.textField}
-        />
-        <TextField
-          label="three"
-          value={this.state.three}
-          onChange={this.handleChange("three")}
-          className={classes.textField}
-        />
-        <Button variant="contained" color="secondary" type="submit">
-          Save
-        </Button>
-      </form>
+      <div className={classes.root}>
+        <form onSubmit={this.props.onLoad}>
+          <TextField
+            label="cid"
+            value={this.props.cid}
+            onChange={this.handleChange("cid")}
+            fullWidth
+            className={classes.input}
+          />
+          <Button variant="contained" color="secondary" type="submit">
+            Load
+          </Button>
+        </form>
+        <Divider className={classes.divider} />
+        <form onSubmit={this.props.onSave}>
+          <TextField
+            label="one"
+            value={this.props.preferences.one}
+            onChange={this.handleChange("one")}
+            fullWidth
+            className={classes.input}
+          />
+          <TextField
+            label="two"
+            value={this.props.preferences.two}
+            onChange={this.handleChange("two")}
+            fullWidth
+            className={classes.input}
+          />
+          <TextField
+            label="three"
+            value={this.props.preferences.three}
+            onChange={this.handleChange("three")}
+            fullWidth
+            className={classes.input}
+          />
+          <InputLabel shrink>Code Style</InputLabel>
+          <Select
+            value={this.props.preferences.codeStyle}
+            onChange={this.handleChange("codeStyle")}
+            fullWidth
+            className={classes.input}
+          >
+            {Object.keys(codeStyles).map(style => (
+              <MenuItem key={style} value={style}>
+                {style}
+              </MenuItem>
+            ))}
+          </Select>
+          <Button variant="contained" color="secondary" type="submit">
+            Save
+          </Button>
+        </form>
+      </div>
     );
   }
 }
 
 const styles = theme =>
   createStyles({
-    form: {
-      width: "100%"
+    root: {
+      width: "100%",
+      marginRight: 64
     },
-    textField: {
+    divider: {
+      marginTop: 32,
+      marginBottom: 32
+    },
+    input: {
       marginBottom: 16,
       width: "100%",
-      // maxWidth: 320,
       display: "block"
     }
   });
