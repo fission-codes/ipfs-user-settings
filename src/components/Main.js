@@ -16,7 +16,9 @@ class Main extends React.Component {
       two: "",
       three: "",
       codeStyle: "docco"
-    }
+    },
+    justSaved: false,
+    justLoaded: false
   };
 
   async componentDidMount() {
@@ -25,7 +27,6 @@ class Main extends React.Component {
   }
 
   handlePrefChange = (name, value) => {
-    console.log("HERE: ", name, " ", value);
     this.setState(state => ({
       ...state,
       preferences: {
@@ -33,13 +34,22 @@ class Main extends React.Component {
         [name]: value
       }
     }));
+    if (name === "cid") {
+      this.setState({ justLoaded: false });
+    } else {
+      this.setState({ justSaved: false });
+    }
   };
 
   loadPreferences = async cid => {
     const ipfs = await getIpfs();
     const resp = await ipfs.cat(cid);
     const preferences = JSON.parse(resp);
-    this.setState({ cid, preferences });
+    this.setState({
+      cid,
+      preferences,
+      justLoaded: true
+    });
   };
 
   handleLoad = async evt => {
@@ -57,7 +67,10 @@ class Main extends React.Component {
       const resp = await ipfs.add(toAdd);
       const cid = resp[0].hash;
       localStorage.setItem("preferenceCID", cid);
-      this.setState({ cid });
+      this.setState({
+        cid,
+        justSaved: true
+      });
     }
   };
 
@@ -72,6 +85,8 @@ class Main extends React.Component {
           <PreferenceForm
             cid={this.state.cid}
             preferences={this.state.preferences}
+            justSaved={this.state.justSaved}
+            justLoaded={this.state.justLoaded}
             onChange={this.handlePrefChange}
             onLoad={this.handleLoad}
             onSave={this.handleSave}

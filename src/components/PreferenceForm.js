@@ -4,9 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import LoadIcon from "@material-ui/icons/Unarchive";
+import SaveIcon from "@material-ui/icons/Save";
 import * as codeStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
+import SubmitButton from "./SubmitButton";
 
 class PreferenceForm extends React.Component {
   handleChange = name => evt => {
@@ -15,7 +17,7 @@ class PreferenceForm extends React.Component {
   };
 
   render() {
-    const { cid, preferences, classes } = this.props;
+    const { preferences, justSaved, justLoaded, classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -27,36 +29,39 @@ class PreferenceForm extends React.Component {
             fullWidth
             className={classes.input}
           />
-          <Button variant="contained" color="secondary" type="submit">
-            Load
-          </Button>
+          <SubmitButton
+            textNormal="Load"
+            textSubmitted="Loaded"
+            icon={<LoadIcon />}
+            submitted={justLoaded}
+          />
         </form>
         <Divider className={classes.divider} />
         <form onSubmit={this.props.onSave}>
           <TextField
             label="one"
-            value={this.props.preferences.one}
+            value={preferences.one}
             onChange={this.handleChange("one")}
             fullWidth
             className={classes.input}
           />
           <TextField
             label="two"
-            value={this.props.preferences.two}
+            value={preferences.two}
             onChange={this.handleChange("two")}
             fullWidth
             className={classes.input}
           />
           <TextField
             label="three"
-            value={this.props.preferences.three}
+            value={preferences.three}
             onChange={this.handleChange("three")}
             fullWidth
             className={classes.input}
           />
           <InputLabel shrink>Code Style</InputLabel>
           <Select
-            value={this.props.preferences.codeStyle}
+            value={preferences.codeStyle}
             onChange={this.handleChange("codeStyle")}
             fullWidth
             className={classes.input}
@@ -67,9 +72,12 @@ class PreferenceForm extends React.Component {
               </MenuItem>
             ))}
           </Select>
-          <Button variant="contained" color="secondary" type="submit">
-            Save
-          </Button>
+          <SubmitButton
+            textNormal="Save"
+            textSubmitted="Saved"
+            icon={<SaveIcon />}
+            submitted={justSaved}
+          />
         </form>
       </div>
     );
