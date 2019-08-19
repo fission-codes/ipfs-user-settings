@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import CheckIcon from "@material-ui/icons/Check";
@@ -20,6 +21,13 @@ const SubmitButton = props => {
       {icon}
     </Button>
   );
+};
+
+SubmitButton.propTypes = {
+  textNormal: PropTypes.string.isRequired,
+  textSubmitted: PropTypes.string.isRequired,
+  icon: PropTypes.element,
+  submitted: PropTypes.bool
 };
 
 const styles = theme =>

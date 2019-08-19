@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +10,8 @@ import Divider from "@material-ui/core/Divider";
 import LoadIcon from "@material-ui/icons/Unarchive";
 import SaveIcon from "@material-ui/icons/Save";
 import SubmitButton from "./SubmitButton";
+import styleOptions from "../utils/styleOptions";
+import PrefPropType from "../utils/prefPropType";
 
 class PreferenceForm extends React.Component {
   handleCIDChange = evt => {
@@ -46,23 +49,9 @@ class PreferenceForm extends React.Component {
         <Divider className={classes.divider} />
         <form onSubmit={this.props.onSave}>
           <TextField
-            label="one"
-            value={preferences.one}
-            onChange={this.handlePrefChange("one")}
-            fullWidth
-            className={classes.input}
-          />
-          <TextField
-            label="two"
-            value={preferences.two}
-            onChange={this.handlePrefChange("two")}
-            fullWidth
-            className={classes.input}
-          />
-          <TextField
-            label="three"
-            value={preferences.three}
-            onChange={this.handlePrefChange("three")}
+            label="username"
+            value={preferences.username}
+            onChange={this.handlePrefChange("username")}
             fullWidth
             className={classes.input}
           />
@@ -91,22 +80,17 @@ class PreferenceForm extends React.Component {
   }
 }
 
-const styleOptions = [
-  "arduinoLight",
-  "codepenEmbed",
-  "darcula",
-  "docco",
-  "github",
-  "googlecode",
-  "hybrid",
-  "monokaiSublime",
-  "nord",
-  "ocean",
-  "pojoaque",
-  "tomorrow",
-  "tomorrowNight",
-  "vs"
-];
+PreferenceForm.propTypes = {
+  cid: PropTypes.string.isRequired,
+  preferences: PrefPropType.isRequired,
+  justSaved: PropTypes.bool.isRequired,
+  justLoaded: PropTypes.bool.isRequired,
+  onCIDChange: PropTypes.func.isRequired,
+  onPrefChange: PropTypes.func.isRequired,
+  onLoad: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string)
+};
 
 const styles = theme =>
   createStyles({

@@ -1,9 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import * as codeStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
+import codeSample from "../utils/codeSample";
+import PrefPropType from "../utils/prefPropType";
 SyntaxHighlighter.registerLanguage("javascript", js);
 
 class Preview extends React.Component {
@@ -14,9 +17,7 @@ class Preview extends React.Component {
         <Typography variant="h5" className={classes.header}>
           Preview
         </Typography>
-        <div>One: {preferences.one}</div>
-        <div>Two: {preferences.two}</div>
-        <div>Three: {preferences.three}</div>
+        <div>One: {preferences.username}</div>
         <SyntaxHighlighter
           language="javascript"
           style={codeStyles[preferences.codeStyle]}
@@ -28,20 +29,10 @@ class Preview extends React.Component {
   }
 }
 
-const codeSample = `
-export const ipfsIsWorking = async ipfs => {
-  try {
-    const id = await ipfs.id();
-    if (id.id !== undefined && id.agentVersion !== undefined) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (err) {
-    return false;
-  }
+Preview.propTypes = {
+  preferences: PrefPropType,
+  classes: PropTypes.objectOf(PropTypes.string)
 };
-`;
 
 const styles = theme =>
   createStyles({
