@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import * as codeStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -10,6 +11,9 @@ class Preview extends React.Component {
     const { preferences = {}, classes } = this.props;
     return (
       <div className={classes.root}>
+        <Typography variant="h5" className={classes.header}>
+          Preview
+        </Typography>
         <div>One: {preferences.one}</div>
         <div>Two: {preferences.two}</div>
         <div>Three: {preferences.three}</div>
@@ -42,8 +46,12 @@ export const ipfsIsWorking = async ipfs => {
 const styles = theme =>
   createStyles({
     root: {
-      marginLeft: 64,
       width: "100%"
+    },
+    header: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      paddingBottom: theme.spacing(1),
+      marginBottom: theme.spacing(2)
     }
   });
 

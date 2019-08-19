@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -7,7 +8,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import LoadIcon from "@material-ui/icons/Unarchive";
 import SaveIcon from "@material-ui/icons/Save";
-import * as codeStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
 import SubmitButton from "./SubmitButton";
 
 class PreferenceForm extends React.Component {
@@ -25,6 +25,9 @@ class PreferenceForm extends React.Component {
 
     return (
       <div className={classes.root}>
+        <Typography variant="h5" className={classes.header}>
+          Settings
+        </Typography>
         <form onSubmit={this.props.onLoad}>
           <TextField
             label="cid"
@@ -70,7 +73,7 @@ class PreferenceForm extends React.Component {
             fullWidth
             className={classes.input}
           >
-            {Object.keys(codeStyles).map(style => (
+            {styleOptions.map(style => (
               <MenuItem key={style} value={style}>
                 {style}
               </MenuItem>
@@ -88,11 +91,32 @@ class PreferenceForm extends React.Component {
   }
 }
 
+const styleOptions = [
+  "arduinoLight",
+  "codepenEmbed",
+  "darcula",
+  "docco",
+  "github",
+  "googlecode",
+  "hybrid",
+  "monokaiSublime",
+  "nord",
+  "ocean",
+  "pojoaque",
+  "tomorrow",
+  "tomorrowNight",
+  "vs"
+];
+
 const styles = theme =>
   createStyles({
     root: {
-      width: "100%",
-      marginRight: 64
+      width: "100%"
+    },
+    header: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      paddingBottom: theme.spacing(1),
+      marginBottom: theme.spacing(2)
     },
     divider: {
       marginTop: 32,

@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import PreferenceForm from "./PreferenceForm";
 import Preview from "./Preview";
@@ -100,19 +102,32 @@ class Main extends React.Component {
         <Typography variant="h4" gutterBottom>
           IPFS Portable User Settings
         </Typography>
-        <div className={classes.main}>
-          <PreferenceForm
-            cid={this.state.cid}
-            preferences={this.state.preferences}
-            justSaved={this.state.justSaved}
-            justLoaded={this.state.justLoaded}
-            onCIDChange={this.handleCIDChange}
-            onPrefChange={this.handlePrefChange}
-            onLoad={this.handleLoad}
-            onSave={this.handleSave}
-          />
-          <Preview cid={this.state.cid} preferences={this.state.preferences} />
-        </div>
+        {/* <div className={classes.main}> */}
+        <Grid container spacing={3}>
+          <Grid item sm={12} md={6}>
+            <Paper className={classes.paper}>
+              <PreferenceForm
+                cid={this.state.cid}
+                preferences={this.state.preferences}
+                justSaved={this.state.justSaved}
+                justLoaded={this.state.justLoaded}
+                onCIDChange={this.handleCIDChange}
+                onPrefChange={this.handlePrefChange}
+                onLoad={this.handleLoad}
+                onSave={this.handleSave}
+              />
+            </Paper>
+          </Grid>
+          <Grid item sm={12} md={6}>
+            <Paper className={classes.paper}>
+              <Preview
+                cid={this.state.cid}
+                preferences={this.state.preferences}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
+        {/* </div> */}
         <ErrorSnackbar
           error={this.state.error}
           onClose={this.handleErrorClose}
@@ -129,6 +144,9 @@ const styles = theme =>
     },
     main: {
       display: "flex"
+    },
+    paper: {
+      padding: 32
     }
   });
 
