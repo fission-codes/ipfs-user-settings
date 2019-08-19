@@ -14,50 +14,41 @@ export const ipfsIsWorking = async ipfs => {
   }
 };
 
-const getIpfs = (permissions = DEFAULT_PERMISSIONS) => {
-  return new Promise(async (resolve, reject) => {
-    // if already instantiated
-    if (ipfsInstance) {
-      return resolve(ipfsInstance);
-    }
-
-    if (window.ipfs) {
-      let ipfs = window.ipfs;
-      if (window.ipfs.enable) {
-        console.log("window.ipfs.enable is available!");
-        // if user set permissions, make sure id and version are both added
-        if (permissions.indexOf("id") < 0) {
-          permissions.push("id");
-        }
-        if (permissions.indexOf("version") < 0) {
-          permissions.push("version");
-        }
-        ipfs = await window.ipfs.enable({
-          commands: permissions
-        });
-      } else {
-        console.log("legacy window.ipfs is available!");
+export const loadWindowIpfs = async permissions => {
+  if (window.ipfs) {
+    let ipfs = window.ipfs;
+    if (window.ipfs.enable) {
+      // if user set permissions, make sure id and version are both added
+      if (permissions.indexOf("id") < 0) {
+        permissions.push("id");
       }
-      const isWorking = await ipfsIsWorking(ipfs);
-      if (isWorking) {
-        ipfsInstance = ipfs;
-        resolve(ipfsInstance);
-      } else {
-        console.log(
-          "cannot access window.ipfs, may not be connected to a working gateway"
-        );
+      if (permissions.indexOf("version") < 0) {
+        permissions.push("version");
       }
+      ipfs = await window.ipfs.enable({
+        commands: permissions
+      });
+    } else {
     }
+    const isWorking = await ipfsIsWorking(ipfs);
+    if (isWorking) {
+      return ipfs;
+    } else {
+      return null;
+    }
+  }
+  return null;
+};
 
-    console.log("window.ipfs is not available, downloading from CDN...");
+export const loadJsIpfs = async () => {
+  return new Promise((resolve, reject) => {
     const script = document.createElement("script");
     script.src = "https://unpkg.com/ipfs/dist/index.min.js";
     script.onload = async () => {
       const ipfs = await window.Ipfs.create();
       const isWorking = await ipfsIsWorking(ipfs);
       if (isWorking) {
-        ipfsInstance = ipfs;
-        resolve(ipfsInstance);
+        resolve(ipfs);
       } else {
         reject(new Error("js-ipfs is not able to load"));
       }
@@ -65,6 +56,23 @@ const getIpfs = (permissions = DEFAULT_PERMISSIONS) => {
     script.onerror = reject;
     document.body.appendChild(script);
   });
+};
+
+const getIpfs = (permissions = DEFAULT_PERMISSIONS) => {
+    // if already instantiated
+    if (ipfsInstance) {
+      return ipfsInstance;
+    }
+
+    ipfsInstance = await loadWindowIpfs(permissions)
+    if(ipfsInstance){
+      console.log("window.ipfs is available!")
+      return ipfsInstance
+    }
+
+    console.log("window.ipfs is not available, downloading from CDN...");
+    ipfsInstance = await loadJsIpfs();
+    return ipfsInstance
 };
 
 export default getIpfs;

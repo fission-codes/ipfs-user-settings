@@ -4,32 +4,22 @@ import Button from "@material-ui/core/Button";
 import CheckIcon from "@material-ui/icons/Check";
 
 const SubmitButton = props => {
-  if (!props.submitted) {
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        type="submit"
-        className={props.classes.button}
-      >
-        {props.textNormal}
-        {props.icon}
-      </Button>
-    );
-  } else {
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        type="submit"
-        className={props.classes.button}
-        disabled
-      >
-        {props.textSubmitted}
-        <CheckIcon className={props.classes.icon} />
-      </Button>
-    );
-  }
+  const { submitted, textNormal, textSubmitted } = props;
+  const text = submitted ? textSubmitted : textNormal;
+  const icon = submitted ? <CheckIcon /> : props.icon;
+
+  return (
+    <Button
+      variant="contained"
+      color="secondary"
+      type="submit"
+      disabled={submitted}
+      className={props.classes.button}
+    >
+      {text}
+      {icon}
+    </Button>
+  );
 };
 
 const styles = theme =>
