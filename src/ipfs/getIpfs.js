@@ -28,7 +28,6 @@ export const loadWindowIpfs = async permissions => {
       ipfs = await window.ipfs.enable({
         commands: permissions
       });
-    } else {
     }
     const isWorking = await ipfsIsWorking(ipfs);
     if (isWorking) {
