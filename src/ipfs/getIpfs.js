@@ -58,21 +58,21 @@ export const loadJsIpfs = async () => {
   });
 };
 
-const getIpfs = (permissions = DEFAULT_PERMISSIONS) => {
-    // if already instantiated
-    if (ipfsInstance) {
-      return ipfsInstance;
-    }
+const getIpfs = async (permissions = DEFAULT_PERMISSIONS) => {
+  // if already instantiated
+  if (ipfsInstance) {
+    return ipfsInstance;
+  }
 
-    ipfsInstance = await loadWindowIpfs(permissions)
-    if(ipfsInstance){
-      console.log("window.ipfs is available!")
-      return ipfsInstance
-    }
+  ipfsInstance = await loadWindowIpfs(permissions);
+  if (ipfsInstance) {
+    console.log("window.ipfs is available!");
+    return ipfsInstance;
+  }
 
-    console.log("window.ipfs is not available, downloading from CDN...");
-    ipfsInstance = await loadJsIpfs();
-    return ipfsInstance
+  console.log("window.ipfs is not available, downloading from CDN...");
+  ipfsInstance = await loadJsIpfs();
+  return ipfsInstance;
 };
 
 export default getIpfs;
