@@ -5,15 +5,12 @@ import Main from "./components/Main";
 
 const theme = createMuiTheme({
   palette: {
+    // type: "dark",
     primary: {
-      main: "#6446fa",
-      light: "#9e74ff",
-      dark: "#1118c6"
+      main: "#6446fa"
     },
     secondary: {
-      main: "#ff5274",
-      light: "#ff87a2",
-      dark: "#1118c6"
+      main: "#ff5274"
     }
   }
 });

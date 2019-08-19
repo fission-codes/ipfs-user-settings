@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import PreferenceForm from "./PreferenceForm";
 import Preview from "./Preview";
@@ -16,6 +15,10 @@ class Main extends React.Component {
     cid: "",
     preferences: {
       username: "",
+      primaryColor: "#6446fa",
+      secondaryColor: "#ff5274",
+      theme: "light",
+      font: "Roboto",
       codeStyle: "darcula"
     },
     justSaved: false,
@@ -104,26 +107,22 @@ class Main extends React.Component {
         {/* <div className={classes.main}> */}
         <Grid container spacing={3}>
           <Grid item sm={12} md={6}>
-            <Paper className={classes.paper}>
-              <PreferenceForm
-                cid={this.state.cid}
-                preferences={this.state.preferences}
-                justSaved={this.state.justSaved}
-                justLoaded={this.state.justLoaded}
-                onCIDChange={this.handleCIDChange}
-                onPrefChange={this.handlePrefChange}
-                onLoad={this.handleLoad}
-                onSave={this.handleSave}
-              />
-            </Paper>
+            <PreferenceForm
+              cid={this.state.cid}
+              preferences={this.state.preferences}
+              justSaved={this.state.justSaved}
+              justLoaded={this.state.justLoaded}
+              onCIDChange={this.handleCIDChange}
+              onPrefChange={this.handlePrefChange}
+              onLoad={this.handleLoad}
+              onSave={this.handleSave}
+            />
           </Grid>
           <Grid item sm={12} md={6}>
-            <Paper className={classes.paper}>
-              <Preview
-                cid={this.state.cid}
-                preferences={this.state.preferences}
-              />
-            </Paper>
+            <Preview
+              cid={this.state.cid}
+              preferences={this.state.preferences}
+            />
           </Grid>
         </Grid>
         {/* </div> */}
@@ -143,13 +142,10 @@ Main.propTypes = {
 const styles = theme =>
   createStyles({
     container: {
-      marginTop: 64
+      marginTop: theme.spacing(8)
     },
     main: {
       display: "flex"
-    },
-    paper: {
-      padding: 32
     }
   });
 
