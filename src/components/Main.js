@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -14,10 +15,8 @@ class Main extends React.Component {
   state = {
     cid: "",
     preferences: {
-      one: "",
-      two: "",
-      three: "",
-      codeStyle: "docco"
+      username: "",
+      codeStyle: "darcula"
     },
     justSaved: false,
     justLoaded: false,
@@ -53,7 +52,7 @@ class Main extends React.Component {
     try {
       preferences = await loadPreferences(cid);
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error: error.toString() });
       return;
     }
     this.setState({
@@ -77,7 +76,7 @@ class Main extends React.Component {
       try {
         cid = await savePreferences(preferences);
       } catch (error) {
-        this.setState({ error });
+        this.setState({ error: error.toString() });
         return;
       }
       localStorage.setItem("preferenceCID", cid);
@@ -136,6 +135,10 @@ class Main extends React.Component {
     );
   }
 }
+
+Main.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
+};
 
 const styles = theme =>
   createStyles({

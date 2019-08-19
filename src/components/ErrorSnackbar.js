@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
@@ -19,24 +20,28 @@ const ErrorSnackbar = props => {
       autoHideDuration={5000}
       className={classes.snackbar}
     >
-      {props.error && (
-        <SnackbarContent
-          className={classes.content}
-          message={
-            <span className={classes.message}>
-              <ErrorIcon className={classes.errorIcon} />
-              {props.error.toString()}
-            </span>
-          }
-          action={[
-            <IconButton key="close" color="inherit" onClick={props.onClose}>
-              <CloseIcon className={classes.closeIcon} />
-            </IconButton>
-          ]}
-        />
-      )}
+      <SnackbarContent
+        className={classes.content}
+        message={
+          <span className={classes.message}>
+            <ErrorIcon className={classes.errorIcon} />
+            {props.error}
+          </span>
+        }
+        action={[
+          <IconButton key="close" color="inherit" onClick={props.onClose}>
+            <CloseIcon className={classes.closeIcon} />
+          </IconButton>
+        ]}
+      />
     </Snackbar>
   );
+};
+
+ErrorSnackbar.propTypes = {
+  error: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string)
 };
 
 const styles = theme =>
