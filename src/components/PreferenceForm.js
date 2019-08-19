@@ -11,9 +11,13 @@ import * as codeStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
 import SubmitButton from "./SubmitButton";
 
 class PreferenceForm extends React.Component {
-  handleChange = name => evt => {
+  handleCIDChange = evt => {
+    this.props.onCIDChange(evt.target.value);
+  };
+
+  handlePrefChange = name => evt => {
     const value = evt.target.value;
-    this.props.onChange(name, value);
+    this.props.onPrefChange(name, value);
   };
 
   render() {
@@ -25,7 +29,7 @@ class PreferenceForm extends React.Component {
           <TextField
             label="cid"
             value={this.props.cid}
-            onChange={this.handleChange("cid")}
+            onChange={this.handleCIDChange}
             fullWidth
             className={classes.input}
           />
@@ -41,28 +45,28 @@ class PreferenceForm extends React.Component {
           <TextField
             label="one"
             value={preferences.one}
-            onChange={this.handleChange("one")}
+            onChange={this.handlePrefChange("one")}
             fullWidth
             className={classes.input}
           />
           <TextField
             label="two"
             value={preferences.two}
-            onChange={this.handleChange("two")}
+            onChange={this.handlePrefChange("two")}
             fullWidth
             className={classes.input}
           />
           <TextField
             label="three"
             value={preferences.three}
-            onChange={this.handleChange("three")}
+            onChange={this.handlePrefChange("three")}
             fullWidth
             className={classes.input}
           />
           <InputLabel shrink>Code Style</InputLabel>
           <Select
             value={preferences.codeStyle}
-            onChange={this.handleChange("codeStyle")}
+            onChange={this.handlePrefChange("codeStyle")}
             fullWidth
             className={classes.input}
           >

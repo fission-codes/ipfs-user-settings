@@ -4,10 +4,10 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import PreferenceForm from "./PreferenceForm";
 import Preview from "./Preview";
-import getIpfs from "../ipfs/getIpfs";
+import ErrorSnackbar from "./ErrorSnackbar";
+import { loadPreferences, savePreferences } from "../ipfs/preferences";
 
 const DEFAULT_CID = "QmYiGo3KpK5Ca928ujpH2MKJgVEkLE981gj1QERYC5h8e8";
-
 class Main extends React.Component {
   state = {
     cid: "",
@@ -18,7 +18,8 @@ class Main extends React.Component {
       codeStyle: "docco"
     },
     justSaved: false,
-    justLoaded: false
+    justLoaded: false,
+    error: null
   };
 
   async componentDidMount() {
@@ -26,25 +27,33 @@ class Main extends React.Component {
     await this.loadPreferences(cid);
   }
 
+  handleCIDChange = value => {
+    this.setState({
+      ...this.state,
+      cid: value,
+      justLoaded: false
+    });
+  };
+
   handlePrefChange = (name, value) => {
     this.setState(state => ({
       ...state,
       preferences: {
         ...state.preferences,
         [name]: value
-      }
+      },
+      justSaved: false
     }));
-    if (name === "cid") {
-      this.setState({ justLoaded: false });
-    } else {
-      this.setState({ justSaved: false });
-    }
   };
 
   loadPreferences = async cid => {
-    const ipfs = await getIpfs();
-    const resp = await ipfs.cat(cid);
-    const preferences = JSON.parse(resp);
+    let preferences;
+    try {
+      preferences = await loadPreferences(cid);
+    } catch (error) {
+      this.setState({ error });
+      return;
+    }
     this.setState({
       cid,
       preferences,
@@ -62,16 +71,26 @@ class Main extends React.Component {
     evt.preventDefault();
     const { preferences } = this.state;
     if (preferences) {
-      const ipfs = await getIpfs();
-      const toAdd = Buffer.from(JSON.stringify(preferences));
-      const resp = await ipfs.add(toAdd);
-      const cid = resp[0].hash;
+      let cid;
+      try {
+        cid = await savePreferences(preferences);
+      } catch (error) {
+        this.setState({ error });
+        return;
+      }
       localStorage.setItem("preferenceCID", cid);
       this.setState({
         cid,
         justSaved: true
       });
     }
+  };
+
+  handleErrorClose = evt => {
+    if (evt) {
+      evt.preventDefault();
+    }
+    this.setState({ error: null });
   };
 
   render() {
@@ -87,12 +106,17 @@ class Main extends React.Component {
             preferences={this.state.preferences}
             justSaved={this.state.justSaved}
             justLoaded={this.state.justLoaded}
-            onChange={this.handlePrefChange}
+            onCIDChange={this.handleCIDChange}
+            onPrefChange={this.handlePrefChange}
             onLoad={this.handleLoad}
             onSave={this.handleSave}
           />
           <Preview cid={this.state.cid} preferences={this.state.preferences} />
         </div>
+        <ErrorSnackbar
+          error={this.state.error}
+          onClose={this.handleErrorClose}
+        />
       </Container>
     );
   }
