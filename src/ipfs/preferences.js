@@ -1,6 +1,14 @@
-import getIpfs from "../ipfs/getIpfs";
+import getIpfsWithConfig from "../ipfs/get-ipfs";
 
 export const DefaultCid = "QmUMQ5Zxu94gwGq96hGEBc2hzoMkywUctbySw7YY6g8ktw";
+
+const getIpfs = async () => {
+  return await getIpfsWithConfig({
+    bootstrap: [
+      "/ip4/127.0.0.1/tcp/4002/ws/ipfs/QmY4N8hPzGQUPDJc8tMWuQokJswStUZk9SkBACCHoVZpCS"
+    ]
+  });
+};
 
 export const validPreferences = preferences => {
   return (
