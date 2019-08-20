@@ -8,7 +8,6 @@ import PreferenceForm from "./PreferenceForm";
 import Preview from "./Preview";
 import ErrorSnackbar from "./ErrorSnackbar";
 import Loader from "./Loader";
-import getIpfs from "../ipfs/getIpfs";
 import { loadPreferences, savePreferences } from "../ipfs/preferences";
 
 const DEFAULT_CID = "QmYiGo3KpK5Ca928ujpH2MKJgVEkLE981gj1QERYC5h8e8";
@@ -30,14 +29,8 @@ class Main extends React.Component {
   };
 
   async componentDidMount() {
-    try {
-      await getIpfs();
-    } catch (err) {
-      this.setState({ error: err.toString() });
-    }
     const cid = localStorage.getItem("preferenceCID") || DEFAULT_CID;
     await this.loadPreferences(cid);
-    this.setState({ ipfsLoaded: true });
   }
 
   handleCIDChange = value => {
@@ -70,7 +63,8 @@ class Main extends React.Component {
     this.setState({
       cid,
       preferences,
-      justLoaded: true
+      justLoaded: true,
+      ipfsLoaded: true
     });
   };
 
