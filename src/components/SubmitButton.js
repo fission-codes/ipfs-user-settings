@@ -27,7 +27,8 @@ SubmitButton.propTypes = {
   textNormal: PropTypes.string.isRequired,
   textSubmitted: PropTypes.string.isRequired,
   icon: PropTypes.element,
-  submitted: PropTypes.bool
+  submitted: PropTypes.bool,
+  classes: PropTypes.objectOf(PropTypes.string)
 };
 
 const styles = theme =>

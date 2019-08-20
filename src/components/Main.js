@@ -7,11 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import PreferenceForm from "./PreferenceForm";
 import Preview from "./Preview";
 import ErrorSnackbar from "./ErrorSnackbar";
+import Loader from "./Loader";
 import { loadPreferences, savePreferences } from "../ipfs/preferences";
 
 const DEFAULT_CID = "QmYiGo3KpK5Ca928ujpH2MKJgVEkLE981gj1QERYC5h8e8";
 class Main extends React.Component {
   state = {
+    ipfsLoaded: false,
     cid: "",
     preferences: {
       username: "",
@@ -61,7 +63,8 @@ class Main extends React.Component {
     this.setState({
       cid,
       preferences,
-      justLoaded: true
+      justLoaded: true,
+      ipfsLoaded: true
     });
   };
 
@@ -104,7 +107,6 @@ class Main extends React.Component {
         <Typography variant="h4" gutterBottom>
           IPFS Portable User Settings
         </Typography>
-        {/* <div className={classes.main}> */}
         <Grid container spacing={3}>
           <Grid item sm={12} md={6}>
             <PreferenceForm
@@ -119,13 +121,14 @@ class Main extends React.Component {
             />
           </Grid>
           <Grid item sm={12} md={6}>
-            <Preview
-              cid={this.state.cid}
-              preferences={this.state.preferences}
-            />
+            <Loader loaded={this.state.ipfsLoaded}>
+              <Preview
+                cid={this.state.cid}
+                preferences={this.state.preferences}
+              />
+            </Loader>
           </Grid>
         </Grid>
-        {/* </div> */}
         <ErrorSnackbar
           error={this.state.error}
           onClose={this.handleErrorClose}
