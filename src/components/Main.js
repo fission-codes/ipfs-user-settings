@@ -63,6 +63,8 @@ class Main extends React.Component {
       this.setState({ error: error.toString() });
       return;
     }
+
+    localStorage.setItem("preferenceCID", cid);
     this.setState({
       cid,
       preferences,
