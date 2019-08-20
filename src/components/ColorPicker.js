@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
 import { SwatchesPicker } from "react-color";
 
-class SubmitButton extends React.Component {
+class ColorPicker extends React.Component {
   state = { anchorEl: null };
 
   openPicker = evt => {
@@ -47,7 +47,7 @@ class SubmitButton extends React.Component {
   }
 }
 
-SubmitButton.propTypes = {
+ColorPicker.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.string)
@@ -68,4 +68,4 @@ const styles = theme =>
     }
   });
 
-export default withStyles(styles)(SubmitButton);
+export default withStyles(styles)(ColorPicker);
