@@ -61,7 +61,6 @@ export const loadJsIpfs = async config => {
     const script = document.createElement("script");
     script.src = "https://unpkg.com/ipfs/dist/index.min.js";
     script.onload = async () => {
-      console.log(window.Ipfs);
       const ipfs = await window.Ipfs.create({ start: false });
       await addBootstrapPeers(ipfs, config.bootstrap);
       const isWorking = await ipfsIsWorking(ipfs);
