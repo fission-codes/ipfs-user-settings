@@ -1,12 +1,19 @@
-import getIpfsWithConfig from "../ipfs/get-ipfs";
+import getIpfsWithConfig from "get-ipfs";
+import { FissionUser } from "@fission-suite/client";
+
+const ipfsProvider =
+  process.env.REACT_APP_INTERPLANETARY_FISSION_URL || "https://hostless.dev";
+const username = process.env.REACT_APP_INTERPLANETARY_FISSION_USERNAME;
+const password = process.env.REACT_APP_INTERPLANETARY_FISSION_PASSWORD;
+const bootstrapNode = process.env.REACT_APP_BOOTSTRAP_NODE;
+const fission = new FissionUser(username, password, ipfsProvider);
 
 export const DefaultCid = "QmUMQ5Zxu94gwGq96hGEBc2hzoMkywUctbySw7YY6g8ktw";
 
 const getIpfs = async () => {
-  return await getIpfsWithConfig({
-    bootstrap: [
-      "/ip4/127.0.0.1/tcp/4002/ws/ipfs/QmY4N8hPzGQUPDJc8tMWuQokJswStUZk9SkBACCHoVZpCS"
-    ]
+  return getIpfsWithConfig();
+  const ipfs = await getIpfsWithConfig({
+    bootstrap: [bootstrapNode]
   });
 };
 
@@ -60,5 +67,11 @@ export const savePreferences = async preferences => {
   } catch (err) {
     throw new Error("Could not parse CID");
   }
+  try {
+    await fission.pin(cid);
+  } catch (err) {
+    console.error(err);
+  }
+
   return cid;
 };
