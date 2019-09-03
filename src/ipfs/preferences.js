@@ -11,7 +11,7 @@ const bootstrapNode =
 
 export const DefaultCid =
   process.env.REACT_APP_DEFAULT_CID ||
-  "QmUMQ5Zxu94gwGq96hGEBc2hzoMkywUctbySw7YY6g8ktw";
+  "QmUWWqCNSdZmus7mc52um5cpqUi1CaE97AzBTY7iWfBXV9";
 
 const getIpfs = async () => {
   return getIpfsWithConfig({
