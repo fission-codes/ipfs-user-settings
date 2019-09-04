@@ -7,7 +7,7 @@
 
 A front end application to demonstrate portable user settings through IPFS. Change your preferences once and take them with you wherever you go.
 
-### Check out the [live demo](https://fission-suite.github.io/ipfs-user-settings/) and our [forum post]()
+### Check out the [live demo](https://fission-suite.github.io/ipfs-user-settings/) and our [forum post](https://talk.fission.codes/t/ipfs-user-settings-app/235) for a more in-depth walkthrough.
 
 ![Screenshot](./screenshot.png)
 
