@@ -27,6 +27,7 @@ class Main extends React.Component {
       codeStyle: "darcula"
     },
     justSaved: false,
+    saving: false,
     justLoaded: false,
     error: null
   };
@@ -83,17 +84,19 @@ class Main extends React.Component {
     evt.preventDefault();
     const { preferences } = this.state;
     if (preferences) {
+      this.setState({ saving: true });
       let cid;
       try {
         cid = await savePreferences(preferences);
       } catch (error) {
-        this.setState({ error: error.toString() });
+        this.setState({ error: error.toString(), saving: false });
         return;
       }
       localStorage.setItem("preferenceCID", cid);
       this.setState({
         cid,
         justSaved: true,
+        saving: false,
         ipfsLoaded: true
       });
     }
@@ -119,6 +122,7 @@ class Main extends React.Component {
               cid={this.state.cid}
               preferences={this.state.preferences}
               justSaved={this.state.justSaved}
+              saving={this.state.saving}
               justLoaded={this.state.justLoaded}
               onCIDChange={this.handleCIDChange}
               onPrefChange={this.handlePrefChange}

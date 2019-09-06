@@ -26,7 +26,7 @@ class PreferenceForm extends React.Component {
   };
 
   render() {
-    const { preferences, justSaved, justLoaded, classes } = this.props;
+    const { preferences, justSaved, saving, justLoaded, classes } = this.props;
 
     return (
       <Paper className={classes.root}>
@@ -97,8 +97,10 @@ class PreferenceForm extends React.Component {
           <SubmitButton
             textNormal="Save"
             textSubmitted="Saved"
+            textActive="Saving..."
             icon={<SaveIcon />}
             submitted={justSaved}
+            active={saving}
           />
         </form>
       </Paper>
@@ -110,6 +112,7 @@ PreferenceForm.propTypes = {
   cid: PropTypes.string.isRequired,
   preferences: PrefPropType.isRequired,
   justSaved: PropTypes.bool.isRequired,
+  saving: PropTypes.bool.isRequired,
   justLoaded: PropTypes.bool.isRequired,
   onCIDChange: PropTypes.func.isRequired,
   onPrefChange: PropTypes.func.isRequired,
