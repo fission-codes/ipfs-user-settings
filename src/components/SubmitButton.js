@@ -5,9 +5,17 @@ import Button from "@material-ui/core/Button";
 import CheckIcon from "@material-ui/icons/Check";
 
 const SubmitButton = props => {
-  const { submitted, textNormal, textSubmitted } = props;
-  const text = submitted ? textSubmitted : textNormal;
-  const icon = submitted ? <CheckIcon /> : props.icon;
+  const { submitted, active, textNormal, textSubmitted, textActive } = props;
+  let text, icon;
+  if (active) {
+    text = textActive;
+  } else if (submitted) {
+    text = textSubmitted;
+    icon = <CheckIcon />;
+  } else {
+    text = textNormal;
+    icon = props.icon;
+  }
 
   return (
     <Button
@@ -26,8 +34,10 @@ const SubmitButton = props => {
 SubmitButton.propTypes = {
   textNormal: PropTypes.string.isRequired,
   textSubmitted: PropTypes.string.isRequired,
+  textActive: PropTypes.string,
   icon: PropTypes.element,
   submitted: PropTypes.bool,
+  active: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.string)
 };
 
