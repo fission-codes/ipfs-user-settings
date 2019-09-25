@@ -113,8 +113,11 @@ class Main extends React.Component {
     const { classes } = this.props;
     return (
       <Container className={classes.container}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4">
           IPFS Portable User Settings
+        </Typography>
+        <Typography className={classes.instructions}>
+          <strong>Instructions: </strong> Try changing and saving your settings. The CID (content identifier) at the top of the form will update as well. Your settings are now available on the decentralized web! Copy the CID and trying loading your settings in another browser or on a different computer.
         </Typography>
         <Grid container spacing={3}>
           <Grid item sm={12} md={6}>
@@ -159,6 +162,10 @@ const styles = theme =>
     },
     main: {
       display: "flex"
+    },
+    instructions: {
+      marginTop: 16,
+      marginBottom: 32
     }
   });
 
