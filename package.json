@@ -10,7 +10,7 @@
     "@material-ui/icons": "^4.2.1",
     "classnames": "^2.2.6",
     "eslint-utils": "1.4.2",
-    "get-ipfs": "^0.0.3",
+    "get-ipfs": "^1.0.0-rc",
     "gh-pages": "^2.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
