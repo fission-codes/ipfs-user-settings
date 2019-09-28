@@ -5,9 +5,13 @@ const ipfsProvider =
   process.env.REACT_APP_INTERPLANETARY_FISSION_URL || "https://hostless.dev";
 const username = process.env.REACT_APP_INTERPLANETARY_FISSION_USERNAME;
 const password = process.env.REACT_APP_INTERPLANETARY_FISSION_PASSWORD;
-const bootstrapNode =
-  process.env.REACT_APP_BOOTSTRAP_NODE ||
+const bootstrapNodeWSS =
+  process.env.REACT_APP_BOOTSTRAP_NODE_WSS ||
   "/dns4/ipfs.runfission.com/tcp/4003/wss/ipfs/QmVLEz2SxoNiFnuyLpbXsH6SvjPTrHNMU88vCQZyhgBzgw";
+const bootstrapNodeTCP =
+  process.env.REACT_APP_BOOTSTRAP_NODE_TCP ||
+  "/ip4/3.215.160.238/tcp/4001/ipfs/QmVLEz2SxoNiFnuyLpbXsH6SvjPTrHNMU88vCQZyhgBzgw";
+
 
 export const DefaultCid =
   process.env.REACT_APP_DEFAULT_CID ||
@@ -15,7 +19,8 @@ export const DefaultCid =
 
 const getIpfs = async () => {
   return getIpfsWithConfig({
-    bootstrap: [bootstrapNode]
+    localPeers: [bootstrapNodeTCP],
+    browserPeers: [bootstrapNodeWSS]
   });
 };
 
