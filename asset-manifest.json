@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/ipfs-user-settings/static/js/main.9658fe41.chunk.js",
-    "main.js.map": "/ipfs-user-settings/static/js/main.9658fe41.chunk.js.map",
+    "main.js": "/ipfs-user-settings/static/js/main.8185bee6.chunk.js",
+    "main.js.map": "/ipfs-user-settings/static/js/main.8185bee6.chunk.js.map",
     "runtime~main.js": "/ipfs-user-settings/static/js/runtime~main.439385aa.js",
     "runtime~main.js.map": "/ipfs-user-settings/static/js/runtime~main.439385aa.js.map",
-    "static/js/2.f9b8520c.chunk.js": "/ipfs-user-settings/static/js/2.f9b8520c.chunk.js",
-    "static/js/2.f9b8520c.chunk.js.map": "/ipfs-user-settings/static/js/2.f9b8520c.chunk.js.map",
+    "static/js/2.b065e7a6.chunk.js": "/ipfs-user-settings/static/js/2.b065e7a6.chunk.js",
+    "static/js/2.b065e7a6.chunk.js.map": "/ipfs-user-settings/static/js/2.b065e7a6.chunk.js.map",
     "index.html": "/ipfs-user-settings/index.html",
-    "precache-manifest.33ccb97b274597fee5636855105cff51.js": "/ipfs-user-settings/precache-manifest.33ccb97b274597fee5636855105cff51.js",
+    "precache-manifest.38137fd1659bd968b77f58abf13909fd.js": "/ipfs-user-settings/precache-manifest.38137fd1659bd968b77f58abf13909fd.js",
     "service-worker.js": "/ipfs-user-settings/service-worker.js"
   }
 }
