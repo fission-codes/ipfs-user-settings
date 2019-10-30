@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -14,6 +16,7 @@ import ColorPicker from "./ColorPicker";
 import SubmitButton from "./SubmitButton";
 import styleOptions from "../utils/styleOptions";
 import PrefPropType from "../utils/prefPropType";
+import Container from "@material-ui/core/Container";
 
 class PreferenceForm extends React.Component {
   handleCIDChange = evt => {
@@ -30,79 +33,83 @@ class PreferenceForm extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <Typography variant="h5" className={classes.header}>
-          Settings
-        </Typography>
-        <form onSubmit={this.props.onLoad}>
-          <TextField
-            label="cid"
-            value={this.props.cid}
-            onChange={this.handleCIDChange}
-            fullWidth
-            className={classes.input}
-          />
-          <SubmitButton
-            textNormal="Load"
-            textSubmitted="Loaded"
-            icon={<LoadIcon />}
-            submitted={justLoaded}
-          />
-        </form>
-        <Divider className={classes.divider} />
-        <form onSubmit={this.props.onSave}>
-          <TextField
-            label="Username"
-            value={preferences.username}
-            onChange={this.handlePrefChange("username")}
-            fullWidth
-            className={classes.input}
-          />
-          <InputLabel shrink>Primary Color</InputLabel>
-          <ColorPicker
-            value={preferences.primaryColor}
-            onChange={this.handlePrefChange("primaryColor")}
-          />
-          <InputLabel shrink>Secondary Color</InputLabel>
-          <ColorPicker
-            value={preferences.secondaryColor}
-            onChange={this.handlePrefChange("secondaryColor")}
-          />
-          <InputLabel shrink>Theme</InputLabel>
-          <Select
-            value={preferences.theme}
-            onChange={this.handlePrefChange("theme")}
-            fullWidth
-            className={classes.input}
-          >
-            <MenuItem key="light" value="light">
-              light
-            </MenuItem>
-            <MenuItem key="dark" value="dark">
-              dark
-            </MenuItem>
-          </Select>
-          <InputLabel shrink>Code Style</InputLabel>
-          <Select
-            value={preferences.codeStyle}
-            onChange={this.handlePrefChange("codeStyle")}
-            fullWidth
-            className={classes.input}
-          >
-            {styleOptions.map(style => (
-              <MenuItem key={style} value={style}>
-                {style}
+        <AppBar position="relative">
+          <Toolbar>
+            <Typography variant="h5">Settings</Typography>
+          </Toolbar>
+        </AppBar>
+        <Container className={classes.container}>
+          <form onSubmit={this.props.onLoad}>
+            <TextField
+              label="cid"
+              value={this.props.cid}
+              onChange={this.handleCIDChange}
+              fullWidth
+              className={classes.input}
+            />
+            <SubmitButton
+              textNormal="Load"
+              textSubmitted="Loaded"
+              icon={<LoadIcon />}
+              submitted={justLoaded}
+            />
+          </form>
+          <Divider className={classes.divider} />
+          <form onSubmit={this.props.onSave}>
+            <TextField
+              label="Username"
+              value={preferences.username}
+              onChange={this.handlePrefChange("username")}
+              fullWidth
+              className={classes.input}
+            />
+            <InputLabel shrink>Primary Color</InputLabel>
+            <ColorPicker
+              value={preferences.primaryColor}
+              onChange={this.handlePrefChange("primaryColor")}
+            />
+            <InputLabel shrink>Secondary Color</InputLabel>
+            <ColorPicker
+              value={preferences.secondaryColor}
+              onChange={this.handlePrefChange("secondaryColor")}
+            />
+            <InputLabel shrink>Theme</InputLabel>
+            <Select
+              value={preferences.theme}
+              onChange={this.handlePrefChange("theme")}
+              fullWidth
+              className={classes.input}
+            >
+              <MenuItem key="light" value="light">
+                light
               </MenuItem>
-            ))}
-          </Select>
-          <SubmitButton
-            textNormal="Save"
-            textSubmitted="Saved"
-            textActive="Saving..."
-            icon={<SaveIcon />}
-            submitted={justSaved}
-            active={saving}
-          />
-        </form>
+              <MenuItem key="dark" value="dark">
+                dark
+              </MenuItem>
+            </Select>
+            <InputLabel shrink>Code Style</InputLabel>
+            <Select
+              value={preferences.codeStyle}
+              onChange={this.handlePrefChange("codeStyle")}
+              fullWidth
+              className={classes.input}
+            >
+              {styleOptions.map(style => (
+                <MenuItem key={style} value={style}>
+                  {style}
+                </MenuItem>
+              ))}
+            </Select>
+            <SubmitButton
+              textNormal="Save"
+              textSubmitted="Saved"
+              textActive="Saving..."
+              icon={<SaveIcon />}
+              submitted={justSaved}
+              active={saving}
+            />
+          </form>
+        </Container>
       </Paper>
     );
   }
@@ -124,8 +131,11 @@ PreferenceForm.propTypes = {
 const styles = theme =>
   createStyles({
     root: {
-      padding: theme.spacing(4),
       width: "100%"
+    },
+    container: {
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4)
     },
     header: {
       borderBottom: `1px solid ${theme.palette.divider}`,
