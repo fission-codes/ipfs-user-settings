@@ -81,7 +81,10 @@ class Preview extends React.Component {
               language="json"
               style={codeStyles[preferences.codeStyle]}
             >
-              {JSON.stringify(preferences, null, 2)}
+              {
+                "# Current Settings \n" + 
+                JSON.stringify(preferences, null, 2)
+              }
             </SyntaxHighlighter>
           </Container>
         </MuiThemeProvider>
