@@ -77,6 +77,15 @@ class Preview extends React.Component {
             >
               {codeSample}
             </SyntaxHighlighter>
+            <SyntaxHighlighter
+              language="json"
+              style={codeStyles[preferences.codeStyle]}
+            >
+              {
+                "# Current Settings \n" + 
+                JSON.stringify(preferences, null, 2)
+              }
+            </SyntaxHighlighter>
           </Container>
         </MuiThemeProvider>
       </Paper>
